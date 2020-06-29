@@ -1,8 +1,5 @@
 package com.fernandojr.cursomc4.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,17 +17,16 @@ public class CatergoriaResource {
 	@Autowired
 	private CategoriaService categoriaService;
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	
 //	Foi criado um metodo "public List<Categoria>" para chamar uma lista de categorias
 //	a anotação PathVariable informa que esse metodo vai receber o id que vai vir na url, o id da url vai para o id da variável
 //	o ResponseEntity já encapsula informações de uma resposta http para um serviço REST, o <?> informa que ele pode ser de qualquer tipo
 //	que pode encontrar ou não um objeto com o id informado
-	public ResponseEntity<?> buscarCategoriaPorId(@PathVariable Integer id) {
-		Categoria obj = categoriaService.buscarCategoriaPorId(id);
+
 		
 //		o retorno ResponseEntity.ok informa que a operação ocorreu com sucesso e a resposta vai ter como corpo o objeto obj que foi buscado
 //		no service
-		return ResponseEntity.ok().body(obj);
+
 		
 ////		Criando as categorias
 //		Categoria categoria1 = new Categoria(1, "Casa");
@@ -47,6 +43,11 @@ public class CatergoriaResource {
 //		
 //		
 //		return listaCategoria;
+	@RequestMapping(value="/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> buscarCategoriaPorId(@PathVariable Integer id) {
+		Categoria obj = categoriaService.buscarCategoriaPorId(id);
+		return ResponseEntity.ok().body(obj);
 	}
+
 
 }
