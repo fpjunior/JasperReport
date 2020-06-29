@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -17,7 +19,7 @@ import lombok.AllArgsConstructor;
 //Anotação Entity para transformar objetos java em entidades/tabelas de banco de dados e vice-versa
 @Entity
 @AllArgsConstructor
-public class Categoria implements Serializable {
+public class Pessoa implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -30,11 +32,15 @@ public class Categoria implements Serializable {
 	private String nome;
 	
 //	associação de Pessoa e Categoria
-	@ManyToMany(mappedBy="categorias")
-	private List<Pessoa> pessoas = new ArrayList<>();
+	@ManyToMany
+			@JoinTable(name =  "PESSOA_CATEGORIA",
+			joinColumns = @JoinColumn(name = "pessoa_id"),
+			inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+			
+	private List<Categoria> categorias = new ArrayList<>();
 	
 	
-	public Categoria() {
+	public Pessoa() {
 	}
 
 
@@ -58,20 +64,20 @@ public class Categoria implements Serializable {
 	}
 
 
-	public Categoria(Integer id, String nome) {
+	public Pessoa(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
 
 
-	public List<Pessoa> getPessoas() {
-		return pessoas;
+	public List<Categoria> getCategoria() {
+		return categorias;
 	}
 
 
-	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
+	public void setPessoas(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 
 	@Override
@@ -91,7 +97,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Pessoa other = (Pessoa) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
